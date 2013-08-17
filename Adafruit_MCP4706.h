@@ -1,19 +1,24 @@
 /**************************************************************************/
 /*! 
-    @file     Adafruit_MCP4725.h
-    @author   K. Townsend (Adafruit Industries)
+    @file     Adafruit_MCP4706.h
+    @author   K.Townsend (Adafruit Industries)
 	@license  BSD (see license.txt)
 	
-	This is a library for the Adafruit MCP4725 breakout board
+        Modified for MCP4706 by Pio Baettig
+
+	I2C Driver for Microchip's MCP4706 I2C DAC
+
+	This is a library for the MCP4706 8-bit DAC modified from
+        Adafruit MCP4725 library
 	----> https://www.adafruit.com/products/???
-	
+		
 	Adafruit invests time and resources providing this open source code, 
 	please support Adafruit and open-source hardware by purchasing 
 	products from Adafruit!
 
 	@section  HISTORY
 
-    v1.0  - First release
+    v1.0 - First release
 */
 /**************************************************************************/
 
@@ -25,14 +30,11 @@
 
 #include <Wire.h>
 
-#define MCP4726_CMD_WRITEDAC            (0x40)  // Writes data to the DAC
-#define MCP4726_CMD_WRITEDACEEPROM      (0x60)  // Writes data to the DAC and the EEPROM (persisting the assigned value after reset)
-
-class Adafruit_MCP4725{
+class Adafruit_MCP4706{
  public:
-  Adafruit_MCP4725();
+  Adafruit_MCP4706();
   void begin(uint8_t a);  
-  void setVoltage( uint16_t output, bool writeEEPROM );
+  void setVoltage( uint8_t output);
 
  private:
   uint8_t _i2caddr;

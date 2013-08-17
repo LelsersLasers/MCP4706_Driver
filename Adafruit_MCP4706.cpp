@@ -1,12 +1,15 @@
 /**************************************************************************/
 /*! 
-    @file     Adafruit_MCP4725.cpp
+    @file     Adafruit_MCP4706.cpp
     @author   K.Townsend (Adafruit Industries)
 	@license  BSD (see license.txt)
 	
-	I2C Driver for Microchip's MCP4725 I2C DAC
+        Modified for MCP4706 by Pio Baettig
 
-	This is a library for the Adafruit MCP4725 breakout
+	I2C Driver for Microchip's MCP4706 I2C DAC
+
+	This is a library for the MCP4706 8-bit DAC modified from
+        Adafruit MCP4725 library
 	----> https://www.adafruit.com/products/???
 		
 	Adafruit invests time and resources providing this open source code, 
@@ -26,14 +29,14 @@
 
 #include <Wire.h>
 
-#include "Adafruit_MCP4725.h"
+#include "Adafruit_MCP4706.h"
 
 /**************************************************************************/
 /*! 
-    @brief  Instantiates a new MCP4725 class
+    @brief  Instantiates a new MCP4706 class
 */
 /**************************************************************************/
-Adafruit_MCP4725::Adafruit_MCP4725() {
+Adafruit_MCP4706::Adafruit_MCP4706() {
 }
 
 /**************************************************************************/
@@ -41,7 +44,7 @@ Adafruit_MCP4725::Adafruit_MCP4725() {
     @brief  Setups the HW
 */
 /**************************************************************************/
-void Adafruit_MCP4725::begin(uint8_t addr) {
+void Adafruit_MCP4706::begin(uint8_t addr) {
   _i2caddr = addr;
   Wire.begin();
 
@@ -50,33 +53,21 @@ void Adafruit_MCP4725::begin(uint8_t addr) {
 /**************************************************************************/
 /*! 
     @brief  Sets the output voltage to a fraction of source vref.  (Value
-            can be 0..4095)
+            can be 0..255)
 
     @param[in]  output
-                The 12-bit value representing the relationship between
+                The 8-bit value representing the relationship between
                 the DAC's input voltage and its output voltage.
-    @param[in]  writeEEPROM
-                If this value is true, 'output' will also be written
-                to the MCP4725's internal non-volatile memory, meaning
-                that the DAC will retain the current voltage output
-                after power-down or reset.
 */
 /**************************************************************************/
-void Adafruit_MCP4725::setVoltage( uint16_t output, bool writeEEPROM )
+void Adafruit_MCP4706::setVoltage( uint8_t output)
 {
   uint8_t twbrback = TWBR;
-  TWBR = 12; // 400 khz
+    TWBR = 12; // 400 khz
+  //  TWBR = 72; // 100 khz
   Wire.beginTransmission(_i2caddr);
-  if (writeEEPROM)
-  {
-    Wire.write(MCP4726_CMD_WRITEDACEEPROM);
-  }
-  else
-  {
-    Wire.write(MCP4726_CMD_WRITEDAC);
-  }
-  Wire.write(output / 16);                   // Upper data bits          (D11.D10.D9.D8.D7.D6.D5.D4)
-  Wire.write((output % 16) << 4);            // Lower data bits          (D3.D2.D1.D0.x.x.x.x)
+  Wire.write(0);            // First Byte 0
+  Wire.write(output);       // Second byte: Data bits          (D7.D6.D5.D4.D3.D2.D1.D0)
   Wire.endTransmission();
   TWBR = twbrback;
 }
