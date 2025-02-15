@@ -32,9 +32,7 @@ Adafruit_MCP4706::Adafruit_MCP4706() { }
 void Adafruit_MCP4706::begin(uint8_t addr, TwoWire &wire) {
     _i2caddr = addr;
     _wire = &wire;
-
-    // Also, user needs to setSCL and setSDA before calling begin
-    // Wire.begin(); 
+    _wire->begin();
 }
  
 /**************************************************************************/
