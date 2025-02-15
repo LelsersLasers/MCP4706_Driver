@@ -18,7 +18,7 @@
 class Adafruit_MCP4706{
     public:
         Adafruit_MCP4706();
-        void Adafruit_MCP4706::begin(uint8_t addr, TwoWire &wire = Wire); 
+        void begin(uint8_t addr, TwoWire &wire = Wire); 
         void setVoltage(uint8_t output);
 
     private:
