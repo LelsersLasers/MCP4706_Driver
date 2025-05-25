@@ -34,6 +34,7 @@ class Adafruit_MCP4706{
         Adafruit_MCP4706();
         void begin(uint8_t addr, TwoWire &wire = Wire); 
         void setVoltage(uint8_t output);
+        setPowerDown(uint8_t mode);
 
     private:
         uint8_t _i2caddr;
