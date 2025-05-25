@@ -69,7 +69,7 @@ void Adafruit_MCP4706::setVoltage(uint8_t output) {
         - MCP4706_PWRDN_500K
 */
 /**************************************************************************/
-void Adafruit_MCP4706::setPowerDown(uint8_t mode) {
+void Adafruit_MCP4706::setMode(uint8_t mode) {
     uint8_t config = (mode & ~MCP4706_PWRDN_MASK); // ensure only power-down bits are set
     _wire->beginTransmission(_i2caddr);
     _wire->write(config | MCP4706_CMD_VOLCONFIG);  // command with config register
