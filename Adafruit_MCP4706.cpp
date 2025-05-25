@@ -50,8 +50,8 @@ void Adafruit_MCP4706::setVoltage(uint8_t output) {
     TWBR = 12; // 400 khz
     // TWBR = 72; // 100 khz
     _wire->beginTransmission(_i2caddr);
-    _wire->write(0);      // First Byte 0
-    _wire->write(output); // Second byte: Data bits (D7.D6.D5.D4.D3.D2.D1.D0)
+    _wire->write(MCP4706_CMD_VOLDAC); // First byte: Command (CMD_VOLDAC = 0)
+    _wire->write(output);             // Second byte: Data bits (D7.D6.D5.D4.D3.D2.D1.D0)
     _wire->endTransmission();
     TWBR = twbrback;
 }
