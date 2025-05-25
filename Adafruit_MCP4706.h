@@ -15,6 +15,20 @@
 
 #include <Wire.h>
 
+// Power Down Mode definitions
+#define MCP4706_PWRDN_MASK     0xF9
+#define MCP4706_AWAKE          0x00
+#define MCP4706_PWRDN_1K       0x02
+#define MCP4706_PWRDN_100K     0x04
+#define MCP4706_PWRDN_500K     0x06
+
+// Command definitioins
+#define MCP4706_CMD_MASK       0x1F
+#define MCP4706_CMD_VOLDAC     0x00
+#define MCP4706_CMD_VOLALL     0x40
+#define MCP4706_CMD_VOLCONFIG  0x80
+#define MCP4706_CMD_ALL        0x60
+
 class Adafruit_MCP4706{
     public:
         Adafruit_MCP4706();
