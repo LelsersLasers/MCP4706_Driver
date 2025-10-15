@@ -26,13 +26,12 @@ Adafruit_MCP4706::Adafruit_MCP4706() { }
 
 /**************************************************************************/
 /*! 
-    @brief  Setups the HW
+    @brief  Setups the HW. Caller is responsible for begin() on I2C wire.
 */
 /**************************************************************************/
 void Adafruit_MCP4706::begin(uint8_t addr, TwoWire &wire) {
     _i2caddr = addr;
     _wire = &wire;
-    _wire->begin();
 }
  
 /**************************************************************************/
